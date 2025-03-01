@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demand vs Supply</title>
+</head>
+<body>
+    <h2>Demand vs Supply in India</h2>
+    <div id="map"></div>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        fetch("/api/demand-supply")
+            .then(response => response.json())
+            .then(data => {
+                let plotData = JSON.parse(data);
+                Plotly.newPlot("map", plotData.data, plotData.layout);
+            });
+    </script>
+</body>
+</html>

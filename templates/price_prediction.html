@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Price Prediction</title>
+</head>
+<body>
+    <h2>Crop Price Prediction</h2>
+    <select id="crop">
+        <option value="Wheat">Wheat</option>
+        <option value="Rice">Rice</option>
+        <option value="Maize">Maize</option>
+    </select>
+    <button onclick="predictPrice()">Predict</button>
+    <p id="result"></p>
+
+    <script>
+        function predictPrice() {
+            let crop = document.getElementById("crop").value;
+            fetch("/api/price-predict", {
+                method: "POST",
+                body: JSON.stringify({ crop: crop }),
+                headers: { "Content-Type": "application/json" }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerText = 
+                    `Predicted price of ${data.crop} is ₹${data.predicted_price}`;
+            });
+        }
+    </script>
+</body>
+</html>

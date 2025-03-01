@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crop Recommendation</title>
+</head>
+<body>
+    <h2>Crop Recommendation System</h2>
+    <select id="soil">
+        <option value="Loamy">Loamy</option>
+        <option value="Sandy">Sandy</option>
+        <option value="Clayey">Clayey</option>
+    </select>
+    <button onclick="recommendCrop()">Recommend</button>
+    <p id="recommendation"></p>
+
+    <script>
+        function recommendCrop() {
+            let soil = document.getElementById("soil").value;
+            fetch("/api/crop-recommend", {
+                method: "POST",
+                body: JSON.stringify({ soil: soil }),
+                headers: { "Content-Type": "application/json" }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("recommendation").innerText = 
+                    `Recommended crops: ${data.recommended_crops.join(", ")}`;
+            });
+        }
+    </script>
+</body>
+</html>
